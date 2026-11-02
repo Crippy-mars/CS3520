@@ -44,11 +44,11 @@ to be saved: `a0` and `a1` are caller-saved, and the caller is finished with
 them once the call is made. The result comes back in `a0`, which is exactly
 where the caller wants it.
 
-Recursion depth for 1071 and 462 is around sixty activations (there are about
-fifty subtractions plus the swaps), so the stack holds roughly 60 x 8 = 480
-bytes at the deepest point. The number of instructions executed is larger than
-the loop version for the same reason: every subtraction now costs a call, a
-save, a restore and a return.
+Recursion depth for 1071 and 462 is fourteen activations: two subtractions, a
+swap, three more subtractions, another swap, and seven more. So the stack holds
+14 x 8 = 112 bytes at the deepest point. The number of instructions executed is
+larger than the loop version for the same reason: every subtraction now costs a
+call, a save, a restore and a return.
 
 The base case shares the epilogue: `beq a1, zero, base` jumps straight to the
 `jalr` at the end, so an activation whose `b` is already zero never allocates a
